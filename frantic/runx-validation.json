@@ -1,6 +1,6 @@
 {
   "closure": {
-    "closed_at": "2026-06-21T18:21:11.495Z",
+    "closed_at": "2026-06-21T18:21:54.424Z",
     "disposition": "closed",
     "reason_code": "process_closed",
     "summary": "cli-tool default completed"
@@ -54,7 +54,7 @@
       {
         "artifact_refs": [],
         "closure": {
-          "closed_at": "2026-06-21T18:21:11.495Z",
+          "closed_at": "2026-06-21T18:21:54.424Z",
           "disposition": "closed",
           "reason_code": "process_exit",
           "summary": "cli-tool exited successfully"
@@ -109,7 +109,7 @@
       "terms": []
     },
     "canonicalization": "runx.receipt.c14n.v1",
-    "created_at": "2026-06-21T18:21:11.495Z",
+    "created_at": "2026-06-21T18:21:54.424Z",
     "decisions": [
       {
         "artifact_refs": [],
@@ -137,8 +137,8 @@
         "selected_harness_ref": null
       }
     ],
-    "digest": "sha256:aaa5ffd39f2f91011ac5771b32771b02405a1816eb2f06972ac03d51bb49c42e",
-    "id": "sha256:da6c669ddc7b7c362986b9f1447a051b781a95ad14c44893b23ade28936a8acd",
+    "digest": "sha256:0104d8da361ca4e3f1a4db98ab76f056ad00534eb9d37244ec62e57ab19d7520",
+    "id": "sha256:9a786e9b1b192b164d5dba9ba39ab674c434a6d69f6cb62d1a1c4d6ff3e66a82",
     "idempotency": {
       "content_hash": "sha256:run_default_a92c5404bb03-default-content",
       "intent_key": "sha256:run_default_a92c5404bb03-default-intent",
@@ -146,7 +146,7 @@
     },
     "issuer": {
       "kid": "shaiananvari8-frantic-39-ci",
-      "public_key_sha256": "sha256:af5a489ab10e2541e0dc610ef734219aa2e43da49221195954cdb5e326c7493f",
+      "public_key_sha256": "sha256:059f9b6c8f5b73a203b4276394e58c0e2e62eb731e94924e74463c53f8ef22dd",
       "type": "ci"
     },
     "lineage": {
@@ -155,7 +155,7 @@
     },
     "schema": "runx.receipt.v1",
     "seal": {
-      "closed_at": "2026-06-21T18:21:11.495Z",
+      "closed_at": "2026-06-21T18:21:54.424Z",
       "criteria": [
         {
           "criterion_id": "process_exit",
@@ -166,14 +166,14 @@
         }
       ],
       "disposition": "closed",
-      "last_observed_at": "2026-06-21T18:21:11.495Z",
+      "last_observed_at": "2026-06-21T18:21:54.424Z",
       "reason_code": "process_closed",
       "summary": "cli-tool default completed"
     },
     "signals": [],
     "signature": {
       "alg": "Ed25519",
-      "value": "base64:t92Ia03pZcxSqN2nBIchkeDGIJODN6IvmZzz2f-zGSoEtYEwsfecNAvZZctzriJaAXhpFjKxAPBEyC6cjZyCDw"
+      "value": "base64:1ndKn6VutpDjNkI1zPdR3kyQaj-YMK-2M3MunaaIi5lpd3gaRdbAqC9PVExFIXZwI2nISbgx_LXCjiHaYWZODA"
     },
     "subject": {
       "commitments": [],
@@ -184,7 +184,7 @@
       }
     }
   },
-  "receipt_id": "sha256:da6c669ddc7b7c362986b9f1447a051b781a95ad14c44893b23ade28936a8acd",
+  "receipt_id": "sha256:9a786e9b1b192b164d5dba9ba39ab674c434a6d69f6cb62d1a1c4d6ff3e66a82",
   "run_id": "run_default_a92c5404bb03",
   "schema": "runx.skill_run.v1",
   "skill_name": "frantic-claim-verification-validator",

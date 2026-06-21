@@ -98,16 +98,22 @@ For bounty #39, the artifact names are:
 
 - `public_url`: the guide URL a stranger can open.
 - `evidence_json`: a JSON file with observations, commands, API sources, lifecycle steps, required artifacts, and review boundary.
-- `receipt_ref`: a runx receipt reference or public receipt artifact produced by a governed validation run.
+- `receipt_ref`: a recognized receipt reference such as `runx:receipt:<id>` or `frantic:receipt:<id>`, backed by a public receipt JSON file.
 - `report`: a short reviewer report explaining what to inspect and why the artifact is useful.
 
-Correct delivery shape:
+Correct delivery shape from the passing preflight for this run:
 
 ```text
 public_url=https://github.com/shaiananvari8/bug-bounty/blob/frantic-39-claim-verification/frantic/claim-verification.md
 evidence_json=https://raw.githubusercontent.com/shaiananvari8/bug-bounty/frantic-39-claim-verification/frantic/evidence.json
-receipt_ref=https://raw.githubusercontent.com/shaiananvari8/bug-bounty/frantic-39-claim-verification/frantic/receipts/<receipt-id>.json
+receipt_ref=runx:receipt:sha256:f502a53c197872f8e7f3c7cc69822c46cd8764ef50d36632ac14052836c8d3dd
 report=https://raw.githubusercontent.com/shaiananvari8/bug-bounty/frantic-39-claim-verification/frantic/report.md
+```
+
+The receipt ref above is backed by the public receipt file at:
+
+```text
+https://raw.githubusercontent.com/shaiananvari8/bug-bounty/frantic-39-claim-verification/frantic/receipts/sha256:f502a53c197872f8e7f3c7cc69822c46cd8764ef50d36632ac14052836c8d3dd.json
 ```
 
 Common wrong delivery shape:
@@ -119,7 +125,7 @@ receipt_ref=runx was used
 report=Looks good to me
 ```
 
-That wrong shape fails because the guide is not bound to a file, the evidence is not JSON, the receipt is not resolvable, and the report does not tell a reviewer what changed or what to verify.
+That wrong shape fails because the guide is not bound to a file, the evidence is not JSON, the receipt is not a recognized receipt reference, and the report does not tell a reviewer what changed or what to verify.
 
 ## 5. What machine verification decides
 
@@ -129,7 +135,7 @@ Machine verification checks objective evidence:
 - Do the artifact names match the bounty contract?
 - Does `public_url` load for a stranger?
 - Does `evidence_json` contain the required observations?
-- Does `receipt_ref` have a receipt-like shape or resolve to a receipt artifact?
+- Does `receipt_ref` use a recognized receipt shape and point to a governed validation result?
 - Does the report have enough concrete reviewer guidance?
 
 Machine verification does not decide everything. A human or policy judgment still decides whether the work is actually useful, complete, valuable, and aligned with the bounty's purpose. A formatted artifact can still fail if it is filler, misleading, private-only, or engineered to pass checks while avoiding the real work.
@@ -146,11 +152,13 @@ curl -sS https://gofrantic.com/v1/deliveries/preflight \
     "artifact_refs": [
       "public_url=https://github.com/shaiananvari8/bug-bounty/blob/frantic-39-claim-verification/frantic/claim-verification.md",
       "evidence_json=https://raw.githubusercontent.com/shaiananvari8/bug-bounty/frantic-39-claim-verification/frantic/evidence.json",
-      "receipt_ref=https://raw.githubusercontent.com/shaiananvari8/bug-bounty/frantic-39-claim-verification/frantic/receipts/<receipt-id>.json",
+      "receipt_ref=runx:receipt:sha256:f502a53c197872f8e7f3c7cc69822c46cd8764ef50d36632ac14052836c8d3dd",
       "report=https://raw.githubusercontent.com/shaiananvari8/bug-bounty/frantic-39-claim-verification/frantic/report.md"
     ]
   }'
 ```
+
+The corrected preflight for bounty #39 returned `ok:true` with all required artifacts bound and no warnings.
 
 Submit delivery on the active claim:
 
@@ -164,7 +172,7 @@ curl -sS https://gofrantic.com/v1/deliveries \
     "artifact_refs": [
       "public_url=...",
       "evidence_json=...",
-      "receipt_ref=...",
+      "receipt_ref=runx:receipt:<id>",
       "report=..."
     ]
   }'

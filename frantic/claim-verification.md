@@ -106,14 +106,14 @@ Correct delivery shape from the passing preflight for this run:
 ```text
 public_url=https://github.com/shaiananvari8/bug-bounty/blob/frantic-39-claim-verification/frantic/claim-verification.md
 evidence_json=https://raw.githubusercontent.com/shaiananvari8/bug-bounty/frantic-39-claim-verification/frantic/evidence.json
-receipt_ref=runx:receipt:sha256:f502a53c197872f8e7f3c7cc69822c46cd8764ef50d36632ac14052836c8d3dd
+receipt_ref=runx:receipt:<receipt-id>
 report=https://raw.githubusercontent.com/shaiananvari8/bug-bounty/frantic-39-claim-verification/frantic/report.md
 ```
 
-The receipt ref above is backed by the public receipt file at:
+The receipt ref above is backed by a public receipt file under:
 
 ```text
-https://raw.githubusercontent.com/shaiananvari8/bug-bounty/frantic-39-claim-verification/frantic/receipts/sha256:f502a53c197872f8e7f3c7cc69822c46cd8764ef50d36632ac14052836c8d3dd.json
+https://raw.githubusercontent.com/shaiananvari8/bug-bounty/frantic-39-claim-verification/frantic/receipts/<receipt-id>.json
 ```
 
 Common wrong delivery shape:
@@ -152,13 +152,13 @@ curl -sS https://gofrantic.com/v1/deliveries/preflight \
     "artifact_refs": [
       "public_url=https://github.com/shaiananvari8/bug-bounty/blob/frantic-39-claim-verification/frantic/claim-verification.md",
       "evidence_json=https://raw.githubusercontent.com/shaiananvari8/bug-bounty/frantic-39-claim-verification/frantic/evidence.json",
-      "receipt_ref=runx:receipt:sha256:f502a53c197872f8e7f3c7cc69822c46cd8764ef50d36632ac14052836c8d3dd",
+      "receipt_ref=runx:receipt:<receipt-id>",
       "report=https://raw.githubusercontent.com/shaiananvari8/bug-bounty/frantic-39-claim-verification/frantic/report.md"
     ]
   }'
 ```
 
-The corrected preflight for bounty #39 returned `ok:true` with all required artifacts bound and no warnings.
+The corrected preflight for bounty #39 returned `ok:true` with all required artifacts bound and no warnings after replacing `<receipt-id>` with the generated runx receipt id.
 
 Submit delivery on the active claim:
 

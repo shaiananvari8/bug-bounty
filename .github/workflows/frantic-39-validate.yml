@@ -76,8 +76,12 @@ jobs:
 
           const evidence = JSON.parse(fs.readFileSync("frantic/evidence.json", "utf8"));
           const validation = JSON.parse(fs.readFileSync("frantic/runx-validation.json", "utf8"));
-          evidence.runx.receipt_ref = receiptUrl;
-          evidence.runx.receipt_id = validation.receipt_id;
+          const receiptId = validation.receipt_id || receiptFile.replace(/\.json$/, "");
+          const receiptRef = `runx:receipt:${receiptId}`;
+
+          evidence.runx.receipt_ref = receiptRef;
+          evidence.runx.receipt_url = receiptUrl;
+          evidence.runx.receipt_id = receiptId;
           evidence.runx.validation_json = validationUrl;
           evidence.runx.github_actions_run = `https://github.com/${repo}/actions/runs/${runId}`;
           delete evidence.runx.verification_json;
@@ -85,13 +89,15 @@ jobs:
           evidence.public_artifacts = {
             public_url: publicUrl,
             evidence_json: evidenceUrl,
-            receipt_ref: receiptUrl,
+            receipt_ref: receiptRef,
+            receipt_url: receiptUrl,
             report: reportUrl
           };
-          evidence.limitations = (evidence.limitations || [])
+          const receiptNote = "The runx receipt was generated in GitHub Actions on Ubuntu because the local Windows host hit runx 0.6.8 receipt-store os error 87.";
+          evidence.limitations = Array.from(new Set((evidence.limitations || [])
             .filter((item) => !item.includes("exact runx signed validation receipt"))
             .filter((item) => !item.includes("workflow fallback"))
-            .concat("The runx receipt was generated in GitHub Actions on Ubuntu because the local Windows host hit runx 0.6.8 receipt-store os error 87.");
+            .concat(receiptNote)));
           fs.writeFileSync("frantic/evidence.json", `${JSON.stringify(evidence, null, 2)}\n`);
 
           fs.writeFileSync(
@@ -99,7 +105,7 @@ jobs:
             [
               `public_url=${publicUrl}`,
               `evidence_json=${evidenceUrl}`,
-              `receipt_ref=${receiptUrl}`,
+              `receipt_ref=${receiptRef}`,
               `report=${reportUrl}`
             ].join("\n") + "\n"
           );

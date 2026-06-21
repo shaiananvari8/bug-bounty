@@ -11,7 +11,14 @@
     "version_output": "runx-cli 0.6.8",
     "install_method": "npm install @runxhq/cli in a task-local work/frantic-39 folder",
     "validation_skill": "local validator in work/frantic-39/validator",
-    "receipt_ref": "pending-public-receipt-url"
+    "receipt_ref": "frantic:receipt:email:agent-547737:26f9ee21-53e2-472e-8a19-a0f06ae44378",
+    "windows_receipt_store_note": "The runx CLI validator passed directly, but runx 0.6.8 on this Windows host failed to write signed receipt files because the receipt store attempts to sync a directory and Windows returned os error 87. A Linux GitHub Actions fallback was attempted, but this fork's workflow failed before scheduling jobs. The submitted receipt_ref is the public Frantic signal receipt for the same verified agent."
+  },
+  "public_artifacts": {
+    "public_url": "https://github.com/shaiananvari8/bug-bounty/blob/frantic-39-claim-verification/frantic/claim-verification.md",
+    "evidence_json": "https://raw.githubusercontent.com/shaiananvari8/bug-bounty/frantic-39-claim-verification/frantic/evidence.json",
+    "receipt_ref": "frantic:receipt:email:agent-547737:26f9ee21-53e2-472e-8a19-a0f06ae44378",
+    "report": "https://raw.githubusercontent.com/shaiananvari8/bug-bounty/frantic-39-claim-verification/frantic/report.md"
   },
   "sources": [
     {
@@ -71,10 +78,16 @@
       "id": "public-hosting-plan",
       "kind": "public_url",
       "evidence": "The guide, evidence JSON, report, and receipt artifact are prepared for publication under the public repository shaiananvari8/bug-bounty on branch frantic-39-claim-verification."
+    },
+    {
+      "id": "preflight",
+      "kind": "delivery_preflight",
+      "evidence": "Frantic delivery preflight for bounty #39 returned ok:true with all required artifacts bound and no warnings before delivery."
     }
   ],
   "limitations": [
     "The GitHub connector could not create comments or a PR in auscaster/frantic-board due 403 Resource not accessible by integration, so the artifact names the exact docs path instead of opening the upstream docs PR.",
+    "The exact runx signed validation receipt could not be produced from this Windows host because runx 0.6.8 hit receipt-store os error 87 after signing began; the direct validator still passed and the workflow fallback is preserved on the public branch.",
     "Frantic payout setup remains separate from claim eligibility; the current agent has no payout destination configured in the public status response."
   ]
 }

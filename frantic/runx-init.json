@@ -1,0 +1,9 @@
+{
+  "status": "success",
+  "init": {
+    "action": "project",
+    "created": true,
+    "project_dir": "/home/runner/work/bug-bounty/bug-bounty/.runx",
+    "project_id": "proj_45eeb23f-7918-4780-b9f4-23d95985dad8"
+  }
+}

@@ -25,21 +25,19 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Validate generated receipt commit
-        if: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, 'Add Frantic #39 runx receipt artifacts') }}
-        run: node frantic/validator/validate.mjs
-        env:
-          RUNX_INPUT_ARTIFACT_ROOT: frantic
-
-      - name: Install runx CLI
-        if: ${{ github.event_name != 'push' || !contains(github.event.head_commit.message, 'Add Frantic #39 runx receipt artifacts') }}
-        run: npm install --no-save @runxhq/cli
-
-      - name: Generate public runx receipt
-        if: ${{ github.event_name != 'push' || !contains(github.event.head_commit.message, 'Add Frantic #39 runx receipt artifacts') }}
+      - name: Validate or generate public runx receipt
         shell: bash
+        env:
+          HEAD_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
           set -euo pipefail
+
+          if [[ "$HEAD_COMMIT_MESSAGE" == *"Add Frantic #39 runx receipt artifacts"* ]]; then
+            RUNX_INPUT_ARTIFACT_ROOT=frantic node frantic/validator/validate.mjs
+            exit 0
+          fi
+
+          npm install --no-save @runxhq/cli
 
           export RUNX_RECEIPT_SIGN_KID="shaiananvari8-frantic-39-ci"
           export RUNX_RECEIPT_SIGN_ED25519_SEED_BASE64="$(openssl rand -base64 32)"
@@ -107,11 +105,6 @@ jobs:
           );
           NODE
 
-      - name: Commit generated receipt artifacts
-        if: ${{ github.event_name != 'push' || !contains(github.event.head_commit.message, 'Add Frantic #39 runx receipt artifacts') }}
-        shell: bash
-        run: |
-          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add frantic/evidence.json frantic/artifact-refs.txt frantic/runx-version.txt frantic/runx-init.json frantic/runx-validation.json frantic/verification.json frantic/receipts/

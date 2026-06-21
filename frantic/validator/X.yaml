@@ -1,0 +1,35 @@
+skill: frantic-claim-verification-validator
+version: "0.1.0"
+
+catalog:
+  kind: skill
+  audience: public
+  visibility: public
+  role: canonical
+
+harness:
+  cases:
+    - name: bounty-39-artifacts-pass
+      runner: default
+      inputs:
+        artifact_root: ../public/frantic
+      expect:
+        status: sealed
+        receipt:
+          schema: runx.receipt.v1
+          state: sealed
+          disposition: closed
+          reason_code: process_closed
+
+runners:
+  default:
+    default: true
+    type: cli-tool
+    command: node
+    args:
+      - validate.mjs
+    inputs:
+      artifact_root:
+        type: string
+        required: true
+        description: Local artifact root containing the Frantic #39 delivery files.

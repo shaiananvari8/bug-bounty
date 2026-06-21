@@ -1,0 +1,80 @@
+{
+  "schema": "frantic.claim_verification_guide.evidence.v1",
+  "summary": "Evidence for Frantic bounty #39: a public worker guide that explains claim verification, artifact binding, machine review boundaries, and payout decision flow.",
+  "agent": {
+    "agent_kid": "agent-547737",
+    "operator": "@shaiananvari8",
+    "claim_id": "faece47c-87a8-4c3a-ac3c-d57da5c61df1",
+    "claim_ref": "frantic:claim:faece47c-87a8-4c3a-ac3c-d57da5c61df1"
+  },
+  "runx": {
+    "version_output": "runx-cli 0.6.8",
+    "install_method": "npm install @runxhq/cli in a task-local work/frantic-39 folder",
+    "validation_skill": "local validator in work/frantic-39/validator",
+    "receipt_ref": "pending-public-receipt-url"
+  },
+  "sources": [
+    {
+      "name": "Frantic bounty #39 contract",
+      "url": "https://gofrantic.com/v1/bounties/39",
+      "observed_fields": ["number", "title", "funded", "workStatus", "requiredArtifacts", "claimProgress", "criteria.acceptance", "criteria.reviewGate"]
+    },
+    {
+      "name": "Frantic agent status",
+      "url": "https://gofrantic.com/v1/agents/agent-547737/status",
+      "observed_fields": ["kid", "operator", "eligible", "claimEligibility", "onboarding.payout"]
+    },
+    {
+      "name": "Frantic claim response",
+      "url": "https://gofrantic.com/v1/claims",
+      "observed_fields": ["ok", "claim_id", "claim_ref", "fuse_minutes", "fuse_expires_at"],
+      "redaction": "agent_token omitted"
+    }
+  ],
+  "observations": [
+    {
+      "id": "runx-version",
+      "kind": "environment",
+      "evidence": "runx --version returned runx-cli 0.6.8, satisfying the bounty's runx CLI 0.6.6 or newer requirement."
+    },
+    {
+      "id": "contract-source",
+      "kind": "api_source",
+      "evidence": "The guide cites https://gofrantic.com/v1/bounties/39 and quotes the bounty number, title, funded state, open work status, price, slot availability, and required artifact names from the live response."
+    },
+    {
+      "id": "lifecycle",
+      "kind": "lifecycle_steps",
+      "evidence": "The guide follows live bounty #39 from public contract, agent eligibility, claim, fuse, artifact construction, preflight, delivery, machine review, human judgment, and payout receipt."
+    },
+    {
+      "id": "required-artifacts",
+      "kind": "artifact_binding",
+      "evidence": "The guide names the exact required artifacts public_url, evidence_json, receipt_ref, and report, then provides a correct delivery shape with each artifact bound by name."
+    },
+    {
+      "id": "wrong-shape",
+      "kind": "anti_fake",
+      "evidence": "The guide includes a common wrong delivery shape and explains why repo landing pages, prose-only evidence, and non-resolving receipt strings fail review."
+    },
+    {
+      "id": "review-boundary",
+      "kind": "review_boundary",
+      "evidence": "The guide separates machine verification from human or policy judgment, explicitly saying machine checks do not decide usefulness, completeness, value, or letter-and-spirit alignment."
+    },
+    {
+      "id": "docs-path",
+      "kind": "integration_path",
+      "evidence": "The guide names the intended Frantic Board docs path as docs/claim-verification.md because direct Frantic Board PR creation was blocked by GitHub integration permissions."
+    },
+    {
+      "id": "public-hosting-plan",
+      "kind": "public_url",
+      "evidence": "The guide, evidence JSON, report, and receipt artifact are prepared for publication under the public repository shaiananvari8/bug-bounty on branch frantic-39-claim-verification."
+    }
+  ],
+  "limitations": [
+    "The GitHub connector could not create comments or a PR in auscaster/frantic-board due 403 Resource not accessible by integration, so the artifact names the exact docs path instead of opening the upstream docs PR.",
+    "Frantic payout setup remains separate from claim eligibility; the current agent has no payout destination configured in the public status response."
+  ]
+}
